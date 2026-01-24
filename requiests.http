@@ -1,0 +1,110 @@
+### Event 1
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "RAYE",
+  "venue": "Avicii Arena",
+  "date": "2026-02-07"
+}
+
+### Event 2
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Dave",
+  "venue": "Avicii Arena",
+  "date": "2026-02-17"
+}
+
+### Event 3
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Håkan Hellström",
+  "venue": "Avicii Arena",
+  "date": "2026-03-13"
+}
+
+### Event 4
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Molly Sandén",
+  "venue": "Avicii Arena",
+  "date": "2026-03-20"
+}
+
+### Event 5
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Tame Impala",
+  "venue": "Avicii Arena",
+  "date": "2026-04-26"
+}
+
+### Event 6
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Starboy",
+  "venue": "Strawberry Arena",
+  "date": "2026-05-10"
+}
+
+### Event 7
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Bad Bunny",
+  "venue": "Strawberry Arena",
+  "date": "2026-06-12"
+}
+
+### Event 8
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Louis Tomlinson",
+  "venue": "Avicii Arena",
+  "date": "2026-03-15"
+}
+
+### Event 9
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Burna Boy",
+  "venue": "Avicii Arena",
+  "date": "2026-01-30"
+}
+
+### Event 10
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "artist": "Deep Purple",
+  "venue": "Avicii Arena",
+  "date": "2026-10-10"
+}       
+
+
+### Get all events
+GET http://localhost:3000/api/events
+
+### Delete an event
+DELETE http://localhost:3000/api/events/{id}
+
+### Delete all events
+DELETE http://localhost:3000/api/events
+
