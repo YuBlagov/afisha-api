@@ -1,8 +1,9 @@
+const e = require("express");
 const express = require("express");
 const app = express();
 app.use(express.json());
 
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const client = new MongoClient("mongodb://localhost:27017");
 
 let events;
@@ -49,15 +50,49 @@ app.get("/api/events", async (req, res) => {
     res.json(allEvents);
 });
 
+app.get("/api/events/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const event = await events.findOne({ _id: ObjectId(id) });
+        if (!event) {
+            return res.status(404).json({ error: "Event not found" });
+        }
+        res.status(200).json(event);
+    } catch (error) {
+        console.error("Error fetching event:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+app.post("/api/events/:id/vote", async (req, res) => {
+    const { id } = req.params;
+    try{
+        const result = await events.updateOne(
+            {_id: new ObjectId (id)},
+            {$inc: {votes: 1}}
+        );
+    if (result.matchedCount === 0) {
+        return res.status(404).json({ error: "Event not found" });
+    }
+    res.status(202).json({ message: "Vote counted" });
+    } catch (error) {
+        res.status(400).json({ error: "Invalid ID format" });
+    }
+});
+
 app.delete("/api/events/:id", async (req, res) => {
     const { id } = req.params;
-    const { ObjectId } = require("mongodb");
-    const result = await events.deleteOne({ _id: ObjectId(id) });
+    try {
+        const result = await events.deleteOne({ _id: ObjectId(id) });
 
     if (result.deletedCount === 0) {
         return res.status(404).json({ error: "Event not found" });
     }
 
+    } catch (error) {
+        console.error("Error deleting event:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
     res.status(204).send();
 });
 

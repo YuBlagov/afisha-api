@@ -102,9 +102,14 @@ Content-Type: application/json
 ### Get all events
 GET http://localhost:3000/api/events
 
+
+### Post a vote
+//POST http://localhost:3000/api/events/697520100bac556028d73c78/vote
+POST http://localhost:3000/api/events/{id}/vote
+
 ### Delete an event
 DELETE http://localhost:3000/api/events/{id}
 
 ### Delete all events
 DELETE http://localhost:3000/api/events
-
+  
