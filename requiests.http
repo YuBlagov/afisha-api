@@ -107,9 +107,18 @@ GET http://localhost:3000/api/events
 //POST http://localhost:3000/api/events/697520100bac556028d73c78/vote
 POST http://localhost:3000/api/events/{id}/vote
 
+### Put an event
+PUT http://localhost:3000/api/events/{id}
+Content-Type: application/json
+
+{
+  "artist": "Deep Purple",
+  "venue": "Avicii Arena",
+  "date": "2026-10-10"
+}
+
 ### Delete an event
 DELETE http://localhost:3000/api/events/{id}
 
 ### Delete all events
 DELETE http://localhost:3000/api/events
-  

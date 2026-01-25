@@ -1,10 +1,11 @@
-const e = require("express");
 const express = require("express");
 const app = express();
 app.use(express.json());
 
 const { MongoClient, ObjectId } = require("mongodb");
 const client = new MongoClient("mongodb://localhost:27017");
+
+const port = 3000;
 
 let events;
 
@@ -80,6 +81,22 @@ app.post("/api/events/:id/vote", async (req, res) => {
     }
 });
 
+app.put("/api/events/:id", async (req, res) => {
+  const { id } = req.params;
+  const { artist, venue, date } = req.body;
+
+  const result = await events.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { artist, venue, date } }
+  );
+
+  if (result.matchedCount === 0) {
+    return res.status(404).json({ error: "Event not found" });
+  }
+
+  res.json({ message: "Event updated" });
+});
+
 app.delete("/api/events/:id", async (req, res) => {
     const { id } = req.params;
     try {
@@ -101,6 +118,6 @@ app.delete("/api/events", async (req, res) => {
     res.status(204).send();
 });
 
-app.listen(3000, () => {
-    console.log("Afisha API running on http://localhost:3000");
+app.listen(port, () => {
+    console.log(`Afisha API running on http://localhost:${port}`);
 });
