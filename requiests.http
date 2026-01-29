@@ -128,7 +128,16 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "email": "julia@example.com",
-  "username": "julia",
-  "password": "password123"
+  "email": "ilo@example.com",
+  "username": "ilo",
+  "password": "password345"
+}
+
+### Login a user
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "ilo@example.com",
+  "password": "password345"
 }

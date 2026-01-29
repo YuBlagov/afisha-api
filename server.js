@@ -5,6 +5,8 @@ app.use(express.json());
 const { MongoClient, ObjectId } = require("mongodb");
 const client = new MongoClient("mongodb://localhost:27017");
 
+const bcrypt = require("bcrypt");
+
 const port = 3000;
 
 let events;
@@ -135,15 +137,31 @@ app.post("/api/users/register", async (req, res) => {
         return res.status(409).json({ error: "User already exists" });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
         email, 
-        password,
+        password: hashedPassword,
         createdAt: new Date()
     }
     await users.insertOne(newUser);
 
     res.status(201).json({ message: "User registered successfully" });
 });
+
+app.post('/api/users/login', async (req, res) => {
+    const { email, password} = req.body;
+
+    const user = await users.findOne({ email });
+    const isCorrect = await bcrypt.compare(password, user.password);
+
+    if (!user) {
+        return res.status(401).json({ error: "Invalid email or password" });
+    }
+    if (!isCorrect) {
+        return res.status(401).json({ error: "Invalid email or password" });
+    }
+    res.status(200).json({ message: "Login successful" });
+})
 
 app.listen(port, () => {
     console.log(`Afisha API running on http://localhost:${port}`);
