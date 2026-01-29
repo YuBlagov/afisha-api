@@ -8,10 +8,15 @@ const client = new MongoClient("mongodb://localhost:27017");
 const port = 3000;
 
 let events;
+let users;
 
 async function start() {
     await client.connect();
-    events = client.db("afisha").collection("events");
+    const db = client.db("afisha");
+
+    events = db.collection("events");
+    users = db.collection("users");
+
     console.log("Connected to MongoDB");
 }
 
@@ -39,7 +44,7 @@ app.post("/api/events", async (req, res) => {
          date 
     });
     if (existingEvent) {
-        return res.status(409).json({ error: "Event already exists" });
+        return res.status(409).json({ error: `Event already exists, it has the id: ${existingEvent._id}` });
     }
 
     await events.insertOne(newEvent);
@@ -94,7 +99,7 @@ app.put("/api/events/:id", async (req, res) => {
     return res.status(404).json({ error: "Event not found" });
   }
 
-  res.json({ message: "Event updated" });
+  res.status(214).json({ message: "Event updated" });
 });
 
 app.delete("/api/events/:id", async (req, res) => {
@@ -116,6 +121,28 @@ app.delete("/api/events/:id", async (req, res) => {
 app.delete("/api/events", async (req, res) => {
     await events.deleteMany({});
     res.status(204).send();
+});
+
+app.post("/api/users/register", async (req, res) => {
+    const {email, password} = req.body;
+
+    if(!email || !password) {
+        return res.status(400).json({ error: "Email and password are required" });
+    }
+
+    const existingUser = await users.findOne({ email });
+    if (existingUser) {
+        return res.status(409).json({ error: "User already exists" });
+    }
+
+    const newUser = {
+        email, 
+        password,
+        createdAt: new Date()
+    }
+    await users.insertOne(newUser);
+
+    res.status(201).json({ message: "User registered successfully" });
 });
 
 app.listen(port, () => {
