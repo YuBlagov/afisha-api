@@ -12,16 +12,15 @@ const JWT_SECRET = "my-super-secret-key";
 
 const port = 3000;
 
+let db;
 let events;
 let users;
 
 async function start() {
     await client.connect();
-    const db = client.db("afisha");
-
+    db = client.db("afisha");
     events = db.collection("events");
     users = db.collection("users");
-
     console.log("Connected to MongoDB");
 }
 
@@ -107,23 +106,28 @@ app.post("/api/events/:id/vote", authenticateToken, async (req, res) => {
     }
 });
 
-app.put("/api/events/:id", async (req, res) => {
+app.put("/api/events/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
   const { artist, venue, date } = req.body;
 
-  const result = await events.updateOne(
-    { _id: new ObjectId(id) },
-    { $set: { artist, venue, date } }
-  );
+  try {
+      const result = await events.updateOne(
+          { _id: new ObjectId(id) },
+          { $set: { artist, venue, date } }
+      );
 
   if (result.matchedCount === 0) {
     return res.status(404).json({ error: "Event not found" });
   }
 
   res.status(214).json({ message: "Event updated" });
+} catch (error) {
+    console.error("Error updating event:", error);
+    res.status(500).json({ error: "Internal server error" });
+}
 });
 
-app.delete("/api/events/:id", async (req, res) => {
+app.delete("/api/events/:id", authenticateToken, async (req, res) => {
     const { id } = req.params;
     try {
         const result = await events.deleteOne({ _id: ObjectId(id) });
@@ -171,11 +175,12 @@ app.post('/api/users/login', async (req, res) => {
     const { email, password} = req.body;
 
     const user = await users.findOne({ email });
-    const isCorrect = await bcrypt.compare(password, user.password);
-
+    
     if (!user) {
         return res.status(401).json({ error: "Invalid email or password" });
     }
+    const isCorrect = await bcrypt.compare(password, user.password);
+
     if (!isCorrect) {
         return res.status(401).json({ error: "Invalid email or password" });
     }
