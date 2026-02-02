@@ -7,6 +7,9 @@ const client = new MongoClient("mongodb://localhost:27017");
 
 const bcrypt = require("bcrypt");
 
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = "my-super-secret-key";
+
 const port = 3000;
 
 let events;
@@ -23,6 +26,22 @@ async function start() {
 }
 
 start();
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ error: "No token provided" });
+    }
+
+    try {
+        const decoded = jwt.verify(authHeader, JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(403).json({ error: "Invalid token" });
+    }
+}
 
 app.post("/api/events", async (req, res) => {
     const { artist, venue, date } = req.body;
@@ -72,7 +91,7 @@ app.get("/api/events/:id", async (req, res) => {
     }
 });
 
-app.post("/api/events/:id/vote", async (req, res) => {
+app.post("/api/events/:id/vote", authenticateToken, async (req, res) => {
     const { id } = req.params;
     try{
         const result = await events.updateOne(
@@ -160,7 +179,12 @@ app.post('/api/users/login', async (req, res) => {
     if (!isCorrect) {
         return res.status(401).json({ error: "Invalid email or password" });
     }
-    res.status(200).json({ message: "Login successful" });
+    const token = jwt.sign(
+        { userId: user._id, email: user.email }, 
+        JWT_SECRET, 
+        { expiresIn: "1h" });
+
+    res.status(200).json({ message: "Login successful", token });
 })
 
 app.listen(port, () => {

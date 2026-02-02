@@ -103,9 +103,14 @@ Content-Type: application/json
 GET http://localhost:3000/api/events
 
 
-### Post a vote
-//POST http://localhost:3000/api/events/697520100bac556028d73c78/vote
+### Post a vote without token
 POST http://localhost:3000/api/events/{id}/vote
+
+### Post a vote with token
+POST http://localhost:3000/api/events/{id}/vote
+Authorization: {token}
+//POST http://localhost:3000/api/events/697520100bac556028d73c78/vote
+//Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTdiNzVhNzg4YjQxMDkwNGM4NTk0MzEiLCJlbWFpbCI6Imlsb0BleGFtcGxlLmNvbSIsImlhdCI6MTc3MDAyNjA5MSwiZXhwIjoxNzcwMDI5NjkxfQ.5amnmIb30vJERvtdoklJe6h0yioGvPd8COMf5irYdc0
 
 ### Put an event
 PUT http://localhost:3000/api/events/{id}
@@ -141,3 +146,4 @@ Content-Type: application/json
   "email": "ilo@example.com",
   "password": "password345"
 }
+
