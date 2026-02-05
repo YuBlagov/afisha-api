@@ -192,6 +192,23 @@ app.post('/api/users/login', async (req, res) => {
     res.status(200).json({ message: "Login successful", token });
 })
 
+app.get('/api/users/me', authenticateToken, async (req, res) => {
+    try{
+        const user = await users.findOne(
+            {_id: new ObjectId(req.user.userId)},
+            { projection: { password: 0 } }
+        );
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({ error: "Invalid token" });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Afisha API running on http://localhost:${port}`);
 });
