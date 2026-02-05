@@ -150,5 +150,5 @@ Content-Type: application/json
 ### Get current user
 GET http://localhost:3000/api/users/me
 Authorization: {token}
-//Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTdiNzVhNzg4YjQxMDkwNGM4NTk0MzEiLCJlbWFpbCI6Imlsb0BleGFtcGxlLmNvbSIsImlhdCI6MTc3MDI4ODk3OSwiZXhwIjoxNzcwMjkyNTc5fQ.ARdgZ4e08p3NHUuNrKrCHrcZmV0Y-V4W0SbEUF5BhRU
+//Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTdiNzVhNzg4YjQxMDkwNGM4NTk0MzEiLCJlbWFpbCI6Imlsb0BleGFtcGxlLmNvbSIsImlhdCI6MTc3MDI5NTY5MywiZXhwIjoxNzcwMjk5MjkzfQ.L43N9NRL3XT15lNxDkdKrCi7jSc8suztmv2GUR4s6-s
 
