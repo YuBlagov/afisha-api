@@ -3,7 +3,7 @@ const app = express();
 app.use(express.json());
 
 const { MongoClient } = require("mongodb");
-const client = new MongoClient("mongodb://localhost:27017");
+const client = new MongoClient("mongodb+srv://soundstate:soundstate@cluster0.jn1pqpc.mongodb.net/?appName=Cluster0");
 
 const port = 3000;
 
