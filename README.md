@@ -28,7 +28,24 @@ Server runs on: `http://localhost:3000`
 ---
 
 ## Endpoints
+### Sounds
 
+- **Get all sounds**  
+  `GET /api/sounds`
+
+- **Get one sound**  
+  `GET /api/sounds/{id}`
+
+- **Create sound**  
+  `POST /api/sounds`  
+  Body JSON: `{ "name": "...", "color": "...", "sound": { "type": "...", "frequency": 0, "volume": 0 } }`
+
+- **Update sound**  
+  `PUT /api/sounds/{id}`
+
+- **Delete sound**  
+  `DELETE /api/sounds/{id}`
+  
 ### Events
 
 - **Create event**  

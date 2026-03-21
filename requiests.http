@@ -152,3 +152,66 @@ GET http://localhost:3000/api/users/me
 Authorization: {token}
 //Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTdiNzVhNzg4YjQxMDkwNGM4NTk0MzEiLCJlbWFpbCI6Imlsb0BleGFtcGxlLmNvbSIsImlhdCI6MTc3MDI5NTY5MywiZXhwIjoxNzcwMjk5MjkzfQ.L43N9NRL3XT15lNxDkdKrCi7jSc8suztmv2GUR4s6-s
 
+
+### Add sound DRIFT
+POST http://localhost:3000/api/sounds
+Content-Type: application/json
+
+{
+  "name": "DRIFT",
+  "color": "#7C9EB2",
+  "sound": { "type": "drone", "frequency": 50, "volume": 0.3, "filterFreq": 400, "lfoSpeed": 0.1 }
+}
+
+###
+POST http://localhost:3000/api/sounds
+Content-Type: application/json
+
+{
+  "name": "PULSE",
+  "color": "#E8865A",
+  "sound": { "type": "rhythm", "frequency": 100, "volume": 0.4, "filterFreq": 300, "lfoSpeed": 0.5, "speed": 1.2 }
+}
+
+###
+POST http://localhost:3000/api/sounds
+Content-Type: application/json
+
+{
+  "name": "NOISE",
+  "color": "#A8B5A2",
+  "sound": { "type": "noise", "frequency": 200, "volume": 0.12, "filterFreq": 350 }
+}
+
+###
+POST http://localhost:3000/api/sounds
+Content-Type: application/json
+
+{
+  "name": "STILL",
+  "color": "#C4B8D4",
+  "sound": { "type": "silence", "frequency": 60, "volume": 0.15, "filterFreq": 800, "lfoSpeed": 0.3 }
+}
+
+###
+POST http://localhost:3000/api/sounds
+Content-Type: application/json
+
+{
+  "name": "ECHO",
+  "color": "#89B4A8",
+  "sound": { "type": "echo", "frequency": 150, "volume": 0.2, "filterFreq": 800, "delayTime": 0.6 }
+}
+
+###
+POST http://localhost:3000/api/sounds
+Content-Type: application/json
+
+{
+  "name": "STATIC",
+  "color": "#8B8B8B",
+  "sound": { "type": "static", "volume": 0.3, "filterFreq": 3000, "intensity": 0.3 }
+}
+
+### Get all sounds
+GET http://localhost:3000/api/sounds

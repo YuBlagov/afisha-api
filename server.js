@@ -16,9 +16,11 @@ async function start() {
     
     const eventsRouter = require("./routes/events")(db);
     const usersRouter = require("./routes/users")(db);
+    const soundsRouter = require("./routes/sounds")(db);
 
     app.use("/api/events", eventsRouter);
     app.use("/api/users", usersRouter);
+    app.use("/api/sounds", soundsRouter);
 
     app.listen(port, () => {
         console.log(`Afisha API running on http://localhost:${port}`);
